@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 
 @Component({
@@ -11,21 +11,13 @@ export class LoginPage {
   email: string = '';
   password: string = '';
 
-  constructor(private authService: AuthService, private navCtrl: NavController) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   onLogin() {
-    this.authService.login(this.email, this.password).then(
-      () => {
-        // Navegar al home después de iniciar sesión
-        this.navCtrl.navigateRoot('/home');
-      },
-      (error) => {
-        console.error('Error en inicio de sesión', error);
-      }
-    );
-  }
-
-  goToSignup() {
-    this.navCtrl.navigateForward('/signup');
+    this.authService.login(this.email, this.password).then(() => {
+      this.router.navigateByUrl('/home'); // Redirige a home después del inicio de sesión exitoso
+    }).catch(err => {
+      console.error('Error during login', err);
+    });
   }
 }

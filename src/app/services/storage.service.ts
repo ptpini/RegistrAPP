@@ -14,20 +14,11 @@ export class StorageService {
     await this.storage.create();
   }
 
-  async saveAttendance(data: string) {
-    const timestamp = new Date().toISOString();
-    await this.storage.set(timestamp, data);
+  saveAttendance(qrData: string) {
+    this.storage.set('attendance', qrData);
   }
 
-  async getAttendanceHistory(): Promise<any[]> {
-    const keys = await this.storage.keys();
-    const attendance = [];
-    
-    for (const key of keys) {
-      const value = await this.storage.get(key);
-      attendance.push({ date: key, data: value });
-    }
-
-    return attendance;
+  getAttendance() {
+    return this.storage.get('attendance');
   }
 }

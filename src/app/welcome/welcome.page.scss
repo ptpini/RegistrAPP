@@ -1,22 +1,29 @@
-ion-header {
-    --background: var(--ion-color-primary);
-    color: white;
-  }
-  
-  ion-content {
-    --background: #f4f5f8;
-    padding: 20px;
-  }
-  
-  ion-card {
-    --background: white;
-    --border-radius: 12px;
-    --box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-    margin-top: 50px;
-  }
-  
-  ion-button {
-    margin-top: 20px;
-    --border-radius: 8px;
-  }
-  
+ion-content {
+  --background: #f2f2f2; /* Fondo claro */
+}
+
+ion-toolbar {
+  background-color: #013e6b; /* Azul DuocUC */
+}
+
+.welcome-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.welcome-container {
+  text-align: center;
+}
+
+h1 {
+  color: #002855; /* Azul característico de DuocUC */
+  font-size: 2.2rem;
+  margin-bottom: 20px;
+}
+
+ion-button {
+  --background: #002855; /* Botón azul DuocUC */
+  --color: #ffffff; /* Texto blanco */
+}

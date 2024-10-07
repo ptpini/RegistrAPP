@@ -1,21 +1,14 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-title class="ion-text-center">RegistrAPP para DuocUC</ion-title>
+    <ion-title class="title">RegistrAPP para DuocUC</ion-title>
+    <img src="assets/icon/duocucregistrapp.png" alt="Duoc UC Logo" class="logo">
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <div class="home-logo-container">
-    <img src="assets/duocuc-logo.png" alt="DuocUC Logo" class="logo-img">
+<ion-content class="ion-padding">
+  <div class="center-content">
+    <h2>Bienvenido, escanee su código QR</h2>
+    <ion-button color="secondary" expand="block" (click)="startScanner()">Escanear código QR</ion-button>
   </div>
-  
-  <div class="home-qr-container">
-    <h2 class="ion-text-center">Escanee su código QR</h2>
-    <ion-button expand="block" color="tertiary" (click)="startScan()">Escanear QR</ion-button>
-  </div>
-
-  <div class="home-attendance-history-container">
-    <h2 class="ion-text-center">Historial de Asistencia</h2>
-    <ion-button expand="block" color="secondary" (click)="goToAttendanceHistory()">Ver Historial</ion-button>
-  </div>
+  <ion-button color="tertiary" expand="block" routerLink="/attendance-history">Historial de Asistencia</ion-button>
 </ion-content>

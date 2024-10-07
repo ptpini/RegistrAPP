@@ -1,40 +1,39 @@
-ion-header {
-  --background: #003da5; /* Color azul institucional de DuocUC */
-  --color: white;
+.title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: white;
 }
 
-.logo-img {
-  width: 150px;
-  display: block;
-  margin: 20px auto;
+.logo {
+  width: 50px;
+  height: auto;
+  float: right;
 }
 
-.home-logo-container {
+.center-content {
   text-align: center;
-}
-
-.home-qr-container, .home-attendance-history-container {
-  margin-top: 30px;
-}
-
-ion-button {
-  --border-radius: 10px;
-  font-size: 18px;
-}
-
-ion-title {
-  font-family: 'Arial', sans-serif;
-  font-size: 24px;
+  padding-top: 20px;
 }
 
 ion-content {
-  --background: #f0f0f5; /* Fondo suave para una experiencia visual cómoda */
+  --background: #002855; /* Color característico de DuocUC */
+}
+
+ion-toolbar {
+  background-color: #013e6b; /* Color del header DuocUC */
 }
 
 h2 {
-  color: #003da5;
-  font-family: 'Arial', sans-serif;
-  font-weight: bold;
-  margin-bottom: 20px;
-  text-transform: uppercase;
+  color: #ffc20e; /* Amarillo DuocUC */
+  font-size: 1.6rem;
+}
+
+ion-button {
+  --background: #ffc20e; /* Botones en amarillo */
+  --color: #002855; /* Texto del botón en color azul DuocUC */
+}
+
+ion-button[color="tertiary"] {
+  --background: #002855;
+  --color: white;
 }

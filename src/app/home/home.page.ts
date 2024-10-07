@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
 import { ApiService } from '../services/api.service';
 import { StorageService } from '../services/storage.service';
-import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -10,35 +9,29 @@ import { NavController } from '@ionic/angular';
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage {
-  qrData: string | undefined;
+  qrData: string = '';
 
-  constructor(
-    private apiService: ApiService,
-    private storageService: StorageService,
-    private navCtrl: NavController
-  ) {}
+  constructor(private apiService: ApiService, private storageService: StorageService) {}
 
-  async startScan() {
+  async startScanner() {
     const result = await BarcodeScanner.startScan();
+
     if (result.hasContent) {
       this.qrData = result.content;
+      console.log(result.content);
 
-      // Enviar la asistencia a la API y guardar localmente
+      // Enviar asistencia a la API
       this.apiService.sendAttendance(result.content).subscribe(
-        (response) => {
+        response => {
           console.log('Asistencia registrada con éxito', response);
           this.storageService.saveAttendance(result.content);
         },
-        (error) => {
+        error => {
           console.error('Error al registrar asistencia', error);
         }
       );
     } else {
       console.error('No se detectó contenido en el escaneo');
     }
-  }
-
-  goToAttendanceHistory() {
-    this.navCtrl.navigateForward('/attendance-history');
   }
 }
