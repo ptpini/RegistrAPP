@@ -7,9 +7,10 @@ import { Router } from '@angular/router';
   styleUrls: ['./welcome.page.scss'],
 })
 export class WelcomePage {
+
   constructor(private router: Router) {}
 
   goToLogin() {
-    this.router.navigate(['/login']); // Redirecciona a la página de login
+    this.router.navigate(['/login']);
   }
 }

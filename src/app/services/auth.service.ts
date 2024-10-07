@@ -1,24 +1,23 @@
 import { Injectable } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { Router } from '@angular/router';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class AuthService {
-  constructor(private afAuth: AngularFireAuth, private router: Router) {}
 
-  login(email: string, password: string) {
-    return this.afAuth.signInWithEmailAndPassword(email, password);
+  constructor() { }
+
+  // Simulación de autenticación
+  isLoggedIn(): boolean {
+    const user = localStorage.getItem('user'); // Simula un usuario logueado guardado en el localStorage
+    return !!user; // Devuelve true si el usuario existe
+  }
+
+  login(user: any) {
+    localStorage.setItem('user', JSON.stringify(user)); // Guarda el usuario en localStorage
   }
 
   logout() {
-    return this.afAuth.signOut().then(() => {
-      this.router.navigateByUrl('/login');
-    });
-  }
-
-  isLoggedIn() {
-    return this.afAuth.authState;
+    localStorage.removeItem('user'); // Elimina el usuario del localStorage
   }
 }
