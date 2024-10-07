@@ -1,20 +1,26 @@
-ion-header {
-  --background: var(--ion-color-primary);
-  color: white;
+ion-content {
+  --background: #000;
+  text-align: center;
 }
 
-ion-content {
-  --background: #f4f5f8;
+.logo-container {
+  margin-top: 20px;
+}
+
+.logo {
+  max-width: 200px;
+  margin: auto;
+}
+
+h2 {
+  color: white;
+  margin-top: 20px;
+}
+
+.qr-container {
+  margin-top: 30px;
 }
 
 ion-card {
-  --background: white;
-  --border-radius: 8px;
-  --box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
-  margin: 15px;
-}
-
-ion-button {
-  --border-radius: 8px;
-  margin-top: 10px;
+  margin-top: 20px;
 }
