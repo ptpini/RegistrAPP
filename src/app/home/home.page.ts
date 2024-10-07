@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { NavController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -7,21 +9,13 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage {
-  attendanceRecords: any[] = [];
+  constructor(
+    private firestore: AngularFirestore,
+    private router: Router
+  ) {}
 
-  constructor(private firestore: AngularFirestore) {}
-
-  async loadAttendanceRecords() {
-    this.firestore.collection('attendance', ref => ref.orderBy('timestamp', 'desc'))
-      .snapshotChanges().subscribe(data => {
-        this.attendanceRecords = data.map(e => ({
-          id: e.payload.doc.id,
-          ...e.payload.doc.data() as any
-        }));
-      });
-  }
-
-  ionViewWillEnter() {
-    this.loadAttendanceRecords();
+  scanQRCode() {
+    console.log('QR Code scanning initiated...');
+    // Código para iniciar el escaneo de código QR.
   }
 }

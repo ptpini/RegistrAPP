@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { AuthService } from '../services/auth.service'; // Asegúrate de que este archivo exista
 
 @Component({
   selector: 'app-reset-password',
@@ -7,13 +7,22 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
   styleUrls: ['./reset-password.page.scss'],
 })
 export class ResetPasswordPage {
-  email!: string;
+  email: string = '';
 
-  constructor(private afAuth: AngularFireAuth) {}
+  constructor(private authService: AuthService) {}
 
   onResetPassword() {
-    this.afAuth.sendPasswordResetEmail(this.email)
-      .then(() => console.log('Password reset email sent!'))
-      .catch(err => console.error(err));
+    if (this.email) {
+      this.authService
+        .resetPassword(this.email)
+        .then(() => {
+          console.log('Correo de restablecimiento enviado');
+        })
+        .catch((err: any) => {
+          console.error(err); // Agrega el tipo `any` a `err`
+        });
+    } else {
+      console.log('Introduce un correo válido');
+    }
   }
 }
