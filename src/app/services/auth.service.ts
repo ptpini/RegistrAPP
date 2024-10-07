@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/compat/auth'; // Asegúrate de que Firebase esté configurado
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 @Injectable({
   providedIn: 'root',
@@ -7,11 +7,19 @@ import { AngularFireAuth } from '@angular/fire/compat/auth'; // Asegúrate de qu
 export class AuthService {
   constructor(private afAuth: AngularFireAuth) {}
 
-  async resetPassword(email: string): Promise<void> {
-    try {
-      await this.afAuth.sendPasswordResetEmail(email);
-    } catch (error) {
-      throw error;
-    }
+  login(email: string, password: string) {
+    return this.afAuth.signInWithEmailAndPassword(email, password);
+  }
+
+  signup(email: string, password: string) {
+    return this.afAuth.createUserWithEmailAndPassword(email, password);
+  }
+
+  logout() {
+    return this.afAuth.signOut();
+  }
+
+  isAuthenticated() {
+    return this.afAuth.authState; // Devuelve el estado de autenticación actual
   }
 }

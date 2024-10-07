@@ -1,36 +1,21 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-title>RegistrAPP para DuocUC</ion-title>
+    <ion-title class="ion-text-center">RegistrAPP para DuocUC</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
-  <div class="logo-container">
-    <img src="assets/duoc_logo.png" alt="DuocUC Logo" class="logo">
+<ion-content>
+  <div class="home-logo-container">
+    <img src="assets/duocuc-logo.png" alt="DuocUC Logo" class="logo-img">
   </div>
   
-  <h2>Escanee su código QR</h2>
-
-  <div class="qr-container">
-    <ion-button expand="full" color="warning" (click)="scanQRCode()">
-      Escanear Código QR
-    </ion-button>
+  <div class="home-qr-container">
+    <h2 class="ion-text-center">Escanee su código QR</h2>
+    <ion-button expand="block" color="tertiary" (click)="startScan()">Escanear QR</ion-button>
   </div>
 
-  <div *ngIf="qrData">
-    <ion-card>
-      <ion-card-header>
-        <ion-card-title>Datos escaneados</ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        {{ qrData }}
-      </ion-card-content>
-    </ion-card>
-  </div>
-
-  <div class="attendance-history-button">
-    <ion-button expand="full" color="secondary" (click)="navigateToAttendanceHistory()">
-      Ver historial de asistencia
-    </ion-button>
+  <div class="home-attendance-history-container">
+    <h2 class="ion-text-center">Historial de Asistencia</h2>
+    <ion-button expand="block" color="secondary" (click)="goToAttendanceHistory()">Ver Historial</ion-button>
   </div>
 </ion-content>

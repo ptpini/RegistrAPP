@@ -1,26 +1,40 @@
-ion-content {
-  --background: #000;
+ion-header {
+  --background: #003da5; /* Color azul institucional de DuocUC */
+  --color: white;
+}
+
+.logo-img {
+  width: 150px;
+  display: block;
+  margin: 20px auto;
+}
+
+.home-logo-container {
   text-align: center;
 }
 
-.logo-container {
-  margin-top: 20px;
-}
-
-.logo {
-  max-width: 200px;
-  margin: auto;
-}
-
-h2 {
-  color: white;
-  margin-top: 20px;
-}
-
-.qr-container {
+.home-qr-container, .home-attendance-history-container {
   margin-top: 30px;
 }
 
-ion-card {
-  margin-top: 20px;
+ion-button {
+  --border-radius: 10px;
+  font-size: 18px;
+}
+
+ion-title {
+  font-family: 'Arial', sans-serif;
+  font-size: 24px;
+}
+
+ion-content {
+  --background: #f0f0f5; /* Fondo suave para una experiencia visual cómoda */
+}
+
+h2 {
+  color: #003da5;
+  font-family: 'Arial', sans-serif;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-transform: uppercase;
 }

@@ -3,29 +3,25 @@ import { NavController } from '@ionic/angular';
 import { AuthService } from '../services/auth.service';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.page.html',
-  styleUrls: ['./login.page.scss'],
+  selector: 'app-signup',
+  templateUrl: './signup.page.html',
+  styleUrls: ['./signup.page.scss'],
 })
-export class LoginPage {
+export class SignupPage {
   email: string = '';
   password: string = '';
 
   constructor(private authService: AuthService, private navCtrl: NavController) {}
 
-  onLogin() {
-    this.authService.login(this.email, this.password).then(
+  onSignup() {
+    this.authService.signup(this.email, this.password).then(
       () => {
-        // Navegar al home después de iniciar sesión
+        // Navegar al home después de registrarse
         this.navCtrl.navigateRoot('/home');
       },
       (error) => {
-        console.error('Error en inicio de sesión', error);
+        console.error('Error en registro', error);
       }
     );
-  }
-
-  goToSignup() {
-    this.navCtrl.navigateForward('/signup');
   }
 }

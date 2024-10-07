@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { ApiService } from '../services/api.service';
 import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
+import { ApiService } from '../services/api.service';
 import { StorageService } from '../services/storage.service';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -10,52 +10,35 @@ import { StorageService } from '../services/storage.service';
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage {
-  qrData: string | null = null;
+  qrData: string | undefined;
 
   constructor(
-    private router: Router,
-    private apiService: ApiService,      // Asegúrate de tener el servicio correctamente inyectado
-    private storageService: StorageService  // Asegúrate de que el servicio de almacenamiento esté bien inyectado
+    private apiService: ApiService,
+    private storageService: StorageService,
+    private navCtrl: NavController
   ) {}
 
-  async scanQRCode() {
-    try {
-      const permission = await BarcodeScanner.checkPermission({ force: true });
+  async startScan() {
+    const result = await BarcodeScanner.startScan();
+    if (result.hasContent) {
+      this.qrData = result.content;
 
-      if (permission.granted) {
-        await BarcodeScanner.hideBackground();
-        const result = await BarcodeScanner.startScan();
-
-        if (result.hasContent) {
-          this.qrData = result.content;
-          console.log(result.content);
-
-          // Enviar asistencia a la API
-          this.apiService.sendAttendance(result.content).subscribe(
-            (response) => {
-              console.log('Asistencia registrada con éxito', response);
-              this.storageService.saveAttendance(result.content);  // Guarda la asistencia en local
-            },
-            (error) => {
-              console.error('Error al registrar asistencia', error);
-            }
-          );
-        } else {
-          console.error('No se detectó contenido en el escaneo');
+      // Enviar la asistencia a la API y guardar localmente
+      this.apiService.sendAttendance(result.content).subscribe(
+        (response) => {
+          console.log('Asistencia registrada con éxito', response);
+          this.storageService.saveAttendance(result.content);
+        },
+        (error) => {
+          console.error('Error al registrar asistencia', error);
         }
-      } else {
-        console.error('Permiso no concedido');
-      }
-
-    } catch (error) {
-      console.error('Error en la lectura del QR', error);
-    } finally {
-      BarcodeScanner.showBackground();
-      BarcodeScanner.stopScan();
+      );
+    } else {
+      console.error('No se detectó contenido en el escaneo');
     }
   }
 
-  navigateToAttendanceHistory() {
-    this.router.navigate(['/attendance-history']);
+  goToAttendanceHistory() {
+    this.navCtrl.navigateForward('/attendance-history');
   }
 }

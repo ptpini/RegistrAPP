@@ -1,11 +1,11 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-title class="ion-text-center">Iniciar Sesión</ion-title>
+    <ion-title class="ion-text-center">Registro</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
-  <form (ngSubmit)="onLogin()">
+  <form (ngSubmit)="onSignup()">
     <ion-item>
       <ion-label position="floating">Correo Electrónico</ion-label>
       <ion-input [(ngModel)]="email" type="email" name="email" required></ion-input>
@@ -16,7 +16,6 @@
       <ion-input [(ngModel)]="password" type="password" name="password" required></ion-input>
     </ion-item>
 
-    <ion-button expand="block" type="submit" color="primary">Iniciar Sesión</ion-button>
-    <ion-button expand="block" color="light" (click)="goToSignup()">Crear Cuenta</ion-button>
+    <ion-button expand="block" type="submit" color="primary">Registrarse</ion-button>
   </form>
 </ion-content>
