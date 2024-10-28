@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { AuthService } from './services/auth.service';
 import { Router } from '@angular/router';
+import { NetworkService } from './services/network.service';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +13,8 @@ export class AppComponent {
   constructor(
     private platform: Platform,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private networkService: NetworkService // Inyectamos el NetworkService para la sincronización
   ) {
     this.initializeApp();
   }

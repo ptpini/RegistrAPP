@@ -7,9 +7,11 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { IonicStorageModule } from '@ionic/storage-angular';
+import { Network } from '@ionic-native/network/ngx';
 
 import { ApiService } from './services/api.service';
-import { StorageService } from './services/storage.service';
+import { AttendanceService } from './services/attendance.service';
+import { NetworkService } from './services/network.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -22,8 +24,10 @@ import { StorageService } from './services/storage.service';
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    ApiService, // Agrega el servicio a los providers
-    StorageService // Agrega el servicio a los providers
+    Network, // Proveedor de Network para detectar conexión
+    ApiService, 
+    AttendanceService,
+    NetworkService
   ],
   bootstrap: [AppComponent],
 })
