@@ -3,15 +3,18 @@ import { Observable, of } from 'rxjs';
 import { Storage } from '@ionic/storage-angular';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class AuthService {
+  private _storage: Storage | null = null;
+
   constructor(private storage: Storage) {
     this.init();
   }
 
   async init() {
-    await this.storage.create();
+    // Inicializa el Storage
+    this._storage = await this.storage.create();
   }
 
   login(email: string, password: string): Observable<boolean> {

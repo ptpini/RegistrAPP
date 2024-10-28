@@ -17,13 +17,14 @@ export class AppComponent {
     this.initializeApp();
   }
 
-  initializeApp() {
-    this.platform.ready().then(() => {
-      if (this.authService.isLoggedIn()) {
-        this.router.navigate(['/home']); // Si está logueado, va al home
-      } else {
-        this.router.navigate(['/welcome']); // Si no está logueado, va a welcome
-      }
-    });
+  async initializeApp() {
+    await this.platform.ready();
+
+    const isLoggedIn = await this.authService.isLoggedIn();
+    if (isLoggedIn) {
+      this.router.navigate(['/home']); // Si está logueado, va al home
+    } else {
+      this.router.navigate(['/welcome']); // Si no está logueado, va a welcome
+    }
   }
 }

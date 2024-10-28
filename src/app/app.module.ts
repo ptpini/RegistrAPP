@@ -6,10 +6,10 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
-import { IonicStorageModule } from '@ionic/storage-angular';  // Asegúrate de incluir este módulo
+import { IonicStorageModule } from '@ionic/storage-angular';
 
-import { ApiService } from './services/api.service';  // Asegúrate de que el servicio está importado
-import { StorageService } from './services/storage.service';  // Asegúrate de que el servicio está importado
+import { ApiService } from './services/api.service';
+import { StorageService } from './services/storage.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -17,13 +17,13 @@ import { StorageService } from './services/storage.service';  // Asegúrate de q
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
-    HttpClientModule,   // Incluye HttpClientModule
-    IonicStorageModule.forRoot()  // Inicializa Ionic Storage
+    HttpClientModule, // Incluye HttpClientModule
+    IonicStorageModule.forRoot() // Inicializa Ionic Storage
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    ApiService,  // Agrega el servicio a los providers
-    StorageService  // Agrega el servicio a los providers
+    ApiService, // Agrega el servicio a los providers
+    StorageService // Agrega el servicio a los providers
   ],
   bootstrap: [AppComponent],
 })
