@@ -8,7 +8,12 @@ import { AttendanceService } from './attendance.service';
 export class NetworkService {
   constructor(private network: Network, private attendanceService: AttendanceService) {
     this.network.onConnect().subscribe(() => {
+      console.log('Conexión restablecida. Sincronizando asistencias...');
       this.attendanceService.syncAttendance();
     });
+  }
+
+  isConnected(): boolean {
+    return this.network.type !== 'none';
   }
 }

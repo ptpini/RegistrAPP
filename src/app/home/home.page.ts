@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
 import { ApiService } from '../services/api.service';
 import { StorageService } from '../services/storage.service';
+import { NetworkService } from '../services/network.service';
 
 @Component({
   selector: 'app-home',
@@ -11,27 +12,46 @@ import { StorageService } from '../services/storage.service';
 export class HomePage {
   qrData: string = '';
 
-  constructor(private apiService: ApiService, private storageService: StorageService) {}
+  constructor(
+    private apiService: ApiService,
+    private storageService: StorageService,
+    private networkService: NetworkService
+  ) {}
 
   async startScanner() {
     const result = await BarcodeScanner.startScan();
 
     if (result.hasContent) {
       this.qrData = result.content;
-      console.log(result.content);
+      console.log('Contenido escaneado:', result.content);
 
-      // Enviar asistencia a la API
-      this.apiService.sendAttendance(result.content).subscribe({
-        next: (response: any) => {
-          console.log('Asistencia registrada con éxito', response);
-          this.storageService.saveAttendance(result.content); // Guarda localmente
-        },
-        error: (error: any) => {
-          console.error('Error al registrar asistencia', error);
-        },
-      });
+      // Verificar y enviar asistencia a la API
+      this.registerAttendance(result.content);
     } else {
       console.error('No se detectó contenido en el escaneo');
+    }
+  }
+
+  private async registerAttendance(content: string) {
+    try {
+      if (this.networkService.isConnected()) {
+        // Intentar enviar asistencia a la API
+        this.apiService.sendAttendance(content).subscribe({
+          next: (response) => {
+            console.log('Asistencia registrada con éxito', response);
+          },
+          error: async (error) => {
+            console.error('Error al registrar asistencia', error);
+            await this.storageService.saveAttendance(content); // Guardar localmente en caso de error
+          },
+        });
+      } else {
+        // Guardar localmente si no hay conexión
+        await this.storageService.saveAttendance(content);
+        console.log('Asistencia guardada localmente por falta de conexión');
+      }
+    } catch (error) {
+      console.error('Error inesperado en el proceso de asistencia:', error);
     }
   }
 }
