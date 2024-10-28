@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { tap, map } from 'rxjs/operators';
 import { Storage } from '@ionic/storage-angular';
 import { ApiService } from './api.service';
@@ -16,6 +16,11 @@ export class AuthService {
 
   async init() {
     this._storage = await this.storage.create();
+  }
+
+  // Método para enviar el correo de restablecimiento de contraseña
+  resetPassword(email: string): Observable<any> {
+    return this.apiService.sendPasswordResetEmail(email);
   }
 
   // Autenticación con la API

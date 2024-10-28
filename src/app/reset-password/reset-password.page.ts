@@ -13,14 +13,14 @@ export class ResetPasswordPage {
 
   onResetPassword() {
     if (this.email) {
-      this.authService
-        .resetPassword(this.email)
-        .then(() => {
+      this.authService.resetPassword(this.email).subscribe({
+        next: () => {
           console.log('Correo de restablecimiento enviado');
-        })
-        .catch((err: any) => {
-          console.error(err); // Agrega el tipo `any` a `err`
-        });
+        },
+        error: (err: any) => {
+          console.error('Error:', err);
+        },
+      });
     } else {
       console.log('Introduce un correo válido');
     }

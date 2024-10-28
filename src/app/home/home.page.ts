@@ -21,15 +21,15 @@ export class HomePage {
       console.log(result.content);
 
       // Enviar asistencia a la API
-      this.apiService.sendAttendance(result.content).subscribe(
-        response => {
+      this.apiService.sendAttendance(result.content).subscribe({
+        next: (response: any) => {
           console.log('Asistencia registrada con éxito', response);
-          this.storageService.saveAttendance(result.content);
+          this.storageService.saveAttendance(result.content); // Guarda localmente
         },
-        error => {
+        error: (error: any) => {
           console.error('Error al registrar asistencia', error);
-        }
-      );
+        },
+      });
     } else {
       console.error('No se detectó contenido en el escaneo');
     }
