@@ -57,7 +57,7 @@ export class AttendanceHistoryPage implements OnInit {
     const alert = await this.alertController.create({
       header: 'Sincronización',
       message: 'La sincronización de asistencias pendientes se ha completado.',
-      buttons: ['OK']
+      buttons: ['OK'],
     });
     await alert.present();
   }

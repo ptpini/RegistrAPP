@@ -15,7 +15,11 @@ const routes: Routes = [
     path: 'home',
     loadChildren: () => import('./home/home.module').then(m => m.HomePageModule)
   },
-  // Agrega otras rutas según tus páginas
+  {
+    path: 'attendance-history',
+    loadChildren: () => import('./attendance-history/attendance-history.module').then(m => m.AttendanceHistoryPageModule)
+  }
+  
 ];
 
 @NgModule({

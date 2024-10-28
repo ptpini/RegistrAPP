@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-title>Historial de Asistencias</ion-title>
     <ion-segment [(ngModel)]="filter" (ionChange)="applyFilter()">
       <ion-segment-button value="all">Todos</ion-segment-button>
@@ -9,16 +9,18 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="ion-padding">
   <ion-button expand="full" color="primary" (click)="syncPendingRecords()">
     Sincronizar Pendientes
   </ion-button>
 
-  <ion-list>
-    <ion-item *ngFor="let record of filteredRecords">
-      <ion-icon slot="start" [name]="record.isSynced ? 'checkmark-circle' : 'time'" color="primary"></ion-icon>
-      <ion-label>
-        <h2>{{ record.date | date: 'short' }}</h2>
-        <p>{{ record.content }}</p>
-        <p *ngIf="record.isSynced" color="success">Sincronizado</p>
-        <p *ngIf="!record.isSynced" color="warning">Pendiente de Sin
+  <ion-item *ngFor="let record of filteredRecords">
+    <ion-icon slot="start" [name]="record.isSynced ? 'checkmark-circle' : 'time'" color="primary"></ion-icon>
+    <ion-label>
+      <h2>{{ record.date | date: 'short' }}</h2>
+      <p>{{ record.content }}</p>
+      <p *ngIf="record.isSynced" color="success">Sincronizado</p>
+      <p *ngIf="!record.isSynced" color="warning">Pendiente de Sincronización</p>
+    </ion-label>
+  </ion-item>
+</ion-content>

@@ -35,18 +35,16 @@ export class HomePage {
   private async registerAttendance(content: string) {
     try {
       if (this.networkService.isConnected()) {
-        // Intentar enviar asistencia a la API
         this.apiService.sendAttendance(content).subscribe({
           next: (response) => {
             console.log('Asistencia registrada con éxito', response);
           },
           error: async (error) => {
             console.error('Error al registrar asistencia', error);
-            await this.storageService.saveAttendance(content); // Guardar localmente en caso de error
+            await this.storageService.saveAttendance(content);
           },
         });
       } else {
-        // Guardar localmente si no hay conexión
         await this.storageService.saveAttendance(content);
         console.log('Asistencia guardada localmente por falta de conexión');
       }
