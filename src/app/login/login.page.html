@@ -1,6 +1,6 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>Login</ion-title>
+  <ion-toolbar color="primary">
+    <ion-title>Inicio de Sesión</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -16,6 +16,6 @@
       <ion-input type="password" formControlName="password"></ion-input>
     </ion-item>
 
-    <ion-button expand="block" type="submit">Iniciar Sesión</ion-button>
+    <ion-button expand="block" type="submit" [disabled]="loginForm.invalid">Ingresar</ion-button>
   </form>
 </ion-content>

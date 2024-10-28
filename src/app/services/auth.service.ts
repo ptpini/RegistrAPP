@@ -1,23 +1,27 @@
 import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
+  private loggedIn = false;
 
-  constructor() { }
-
-  // Simulación de autenticación
   isLoggedIn(): boolean {
-    const user = localStorage.getItem('user'); // Simula un usuario logueado guardado en el localStorage
-    return !!user; // Devuelve true si el usuario existe
+    return this.loggedIn;
   }
 
-  login(user: any) {
-    localStorage.setItem('user', JSON.stringify(user)); // Guarda el usuario en localStorage
+  login(email: string, password: string): Observable<boolean> {
+    if (email === 'test@example.com' && password === '123456') {
+      this.loggedIn = true; // Cambia el estado de loggedIn al iniciar sesión exitosamente
+      return of(true); // Simula un login exitoso
+    } else {
+      this.loggedIn = false;
+      return of(false); // Simula un login fallido
+    }
   }
 
-  logout() {
-    localStorage.removeItem('user'); // Elimina el usuario del localStorage
+  logout(): void {
+    this.loggedIn = false;
   }
 }

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 
@@ -8,17 +9,29 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage {
-  email: string = '';
-  password: string = '';
+  loginForm: FormGroup;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router
+  ) {
+    this.loginForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', Validators.required],
+    });
+  }
 
-  async onLogin() {
-    try {
-      await this.authService.login(this.email, this.password);
-      this.router.navigateByUrl('/home');
-    } catch (error) {
-      console.log('Login failed', error);
+  onLogin() {
+    if (this.loginForm.valid) {
+      const { email, password } = this.loginForm.value;
+      this.authService.login(email, password).subscribe((success) => {
+        if (success) {
+          this.router.navigate(['/home']);
+        } else {
+          console.error('Error de inicio de sesión');
+        }
+      });
     }
   }
 }
