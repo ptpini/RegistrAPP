@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-title>Inicio de Sesión</ion-title>
+    <ion-title>Iniciar Sesión</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -8,14 +8,23 @@
   <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
     <ion-item>
       <ion-label position="floating">Correo Electrónico</ion-label>
-      <ion-input type="email" formControlName="email"></ion-input>
+      <ion-input formControlName="email" type="email"></ion-input>
+    </ion-item>
+    <ion-item *ngIf="loginForm.get('email').invalid && loginForm.get('email').touched">
+      <ion-note color="danger">Ingrese un correo válido</ion-note>
     </ion-item>
 
     <ion-item>
       <ion-label position="floating">Contraseña</ion-label>
-      <ion-input type="password" formControlName="password"></ion-input>
+      <ion-input formControlName="password" type="password"></ion-input>
+    </ion-item>
+    <ion-item *ngIf="loginForm.get('password').invalid && loginForm.get('password').touched">
+      <ion-note color="danger">Ingrese una contraseña</ion-note>
     </ion-item>
 
-    <ion-button expand="block" type="submit" [disabled]="loginForm.invalid">Ingresar</ion-button>
+    <ion-button expand="block" type="submit" color="primary" [disabled]="!loginForm.valid">Iniciar Sesión</ion-button>
+    <ion-item *ngIf="loginError">
+      <ion-note color="danger">Error de inicio de sesión. Verifique sus credenciales.</ion-note>
+    </ion-item>
   </form>
 </ion-content>

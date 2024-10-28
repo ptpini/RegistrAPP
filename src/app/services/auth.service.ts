@@ -1,27 +1,33 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
+import { Storage } from '@ionic/storage-angular';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private loggedIn = false;
+  constructor(private storage: Storage) {
+    this.init();
+  }
 
-  isLoggedIn(): boolean {
-    return this.loggedIn;
+  async init() {
+    await this.storage.create();
   }
 
   login(email: string, password: string): Observable<boolean> {
     if (email === 'test@example.com' && password === '123456') {
-      this.loggedIn = true; // Cambia el estado de loggedIn al iniciar sesión exitosamente
-      return of(true); // Simula un login exitoso
+      this.storage.set('isLoggedIn', true);
+      return of(true);
     } else {
-      this.loggedIn = false;
-      return of(false); // Simula un login fallido
+      return of(false);
     }
   }
 
-  logout(): void {
-    this.loggedIn = false;
+  async isLoggedIn(): Promise<boolean> {
+    return await this.storage.get('isLoggedIn') || false;
+  }
+
+  async logout() {
+    await this.storage.remove('isLoggedIn');
   }
 }
