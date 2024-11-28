@@ -5,17 +5,23 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <form (ngSubmit)="onSignup()">
+  <form [formGroup]="signupForm" (ngSubmit)="onSignup()">
     <ion-item>
       <ion-label position="floating">Correo Electrónico</ion-label>
-      <ion-input [(ngModel)]="email" type="email" name="email" required></ion-input>
+      <ion-input formControlName="email" type="email"></ion-input>
+    </ion-item>
+    <ion-item *ngIf="signupForm?.get('email')?.invalid && signupForm?.get('email')?.touched">
+      <ion-note color="danger">Ingrese un correo válido</ion-note>
     </ion-item>
 
     <ion-item>
       <ion-label position="floating">Contraseña</ion-label>
-      <ion-input [(ngModel)]="password" type="password" name="password" required></ion-input>
+      <ion-input formControlName="password" type="password"></ion-input>
+    </ion-item>
+    <ion-item *ngIf="signupForm?.get('password')?.invalid && signupForm?.get('password')?.touched">
+      <ion-note color="danger">Ingrese una contraseña válida</ion-note>
     </ion-item>
 
-    <ion-button expand="block" type="submit" color="primary">Registrarse</ion-button>
+    <ion-button expand="block" type="submit" color="primary" [disabled]="!signupForm.valid">Registrarse</ion-button>
   </form>
 </ion-content>

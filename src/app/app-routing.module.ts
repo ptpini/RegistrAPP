@@ -3,8 +3,8 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: '',
-    redirectTo: 'welcome', // Cambia 'welcome' por la página de inicio de tu aplicación si es otra
+    path: 'src/app/welcome/welcome.page.html', // Ruta predeterminada
+    redirectTo: 'welcome', // Cambia a la página inicial que desees
     pathMatch: 'full'
   },
   {
@@ -18,8 +18,24 @@ const routes: Routes = [
   {
     path: 'attendance-history',
     loadChildren: () => import('./attendance-history/attendance-history.module').then(m => m.AttendanceHistoryPageModule)
+  },
+  {
+    path: 'login',
+    loadChildren: () => import('./login/login.module').then(m => m.LoginPageModule)
+  },
+  {
+    path: 'reset-password',
+    loadChildren: () => import('./reset-password/reset-password.module').then(m => m.ResetPasswordPageModule)
+  },
+  {
+    path: 'signup', // Si tienes una página de registro
+    loadChildren: () => import('./signup/signup.module').then(m => m.SignupPageModule)
+  },
+  {
+    path: '**', // Ruta para manejar páginas no encontradas
+    redirectTo: 'welcome', // Redirige a una página válida
+    pathMatch: 'full'
   }
-  
 ];
 
 @NgModule({

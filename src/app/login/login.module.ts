@@ -1,20 +1,19 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'; // Incluye ReactiveFormsModule
 import { IonicModule } from '@ionic/angular';
+
 import { LoginPageRoutingModule } from './login-routing.module';
 import { LoginPage } from './login.page';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule, // Importa este módulo para habilitar formularios reactivos
     IonicModule,
     LoginPageRoutingModule
   ],
-  declarations: [LoginPage],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  declarations: [LoginPage]
 })
 export class LoginPageModule {}

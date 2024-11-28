@@ -10,7 +10,7 @@
       <ion-label position="floating">Correo Electrónico</ion-label>
       <ion-input formControlName="email" type="email"></ion-input>
     </ion-item>
-    <ion-item *ngIf="loginForm.get('email').invalid && loginForm.get('email').touched">
+    <ion-item *ngIf="loginForm?.get('email')?.invalid && loginForm?.get('email')?.touched">
       <ion-note color="danger">Ingrese un correo válido</ion-note>
     </ion-item>
 
@@ -18,7 +18,7 @@
       <ion-label position="floating">Contraseña</ion-label>
       <ion-input formControlName="password" type="password"></ion-input>
     </ion-item>
-    <ion-item *ngIf="loginForm.get('password').invalid && loginForm.get('password').touched">
+    <ion-item *ngIf="loginForm?.get('password')?.invalid && loginForm?.get('password')?.touched">
       <ion-note color="danger">Ingrese una contraseña</ion-note>
     </ion-item>
 
