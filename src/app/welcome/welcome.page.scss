@@ -1,13 +1,26 @@
-.welcome-page {
+.logo-container {
   display: flex;
   justify-content: center;
-  align-items: center;
-  height: 100%;
-  background-color: #f4f4f4;
+  margin-top: 20px;
 }
 
-ion-button {
-  margin-top: 20px;
-  --background: #0033A0; /* Cambia este color a los colores de DuocUC */
-  --color: white;
+.logo {
+  max-width: 150px;
+  height: auto;
+}
+
+.welcome-message {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.welcome-message h2 {
+  font-size: 1.5rem;
+  color: #003366;
+}
+
+.welcome-message p {
+  font-size: 1rem;
+  color: #666;
+  margin-top: 10px;
 }

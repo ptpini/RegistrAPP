@@ -3,8 +3,8 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: 'src/app/welcome/welcome.page.html', // Ruta predeterminada
-    redirectTo: 'welcome', // Cambia a la página inicial que desees
+    path: '',
+    redirectTo: 'welcome', // Página inicial predeterminada
     pathMatch: 'full'
   },
   {
@@ -28,11 +28,11 @@ const routes: Routes = [
     loadChildren: () => import('./reset-password/reset-password.module').then(m => m.ResetPasswordPageModule)
   },
   {
-    path: 'signup', // Si tienes una página de registro
+    path: 'signup',
     loadChildren: () => import('./signup/signup.module').then(m => m.SignupPageModule)
   },
   {
-    path: '**', // Ruta para manejar páginas no encontradas
+    path: '**', // Ruta comodín para manejar errores 404
     redirectTo: 'welcome', // Redirige a una página válida
     pathMatch: 'full'
   }
