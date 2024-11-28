@@ -5,10 +5,10 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <h2>Hola, {{ userName }}</h2>
-  <p>¡Gracias por usar RegistrAPP! Escanea un código QR para registrar tu asistencia.</p>
+  <h2>Hola, {{ userName }}!</h2>
+  <p>Gracias por usar RegistrAPP. Escanea un código QR para registrar tu asistencia.</p>
 
-  <ion-button expand="block" color="success" (click)="scanQRCode()">
-    Escanear QR
+  <ion-button expand="block" color="success" (click)="startScanner()">
+    Escanear
   </ion-button>
 </ion-content>

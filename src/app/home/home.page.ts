@@ -10,8 +10,8 @@ import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage {
-  qrData: string = '';
-  userName: string = ''; // Almacena el nombre del usuario
+  qrData: string = ''; // Almacena el contenido del QR escaneado
+  userName: string = 'Usuario';
 
   constructor(
     private apiService: ApiService,
@@ -21,21 +21,24 @@ export class HomePage {
 
   async ngOnInit() {
     // Recupera el nombre del usuario desde el almacenamiento local
-    this.userName = await this.storageService.get('user_name') || 'Usuario';
+    this.userName = (await this.storageService.get('user_name')) || 'Usuario';
   }
 
-  // Inicia el escaneo del código QR
+  // Función para iniciar el escaneo del QR
   async startScanner() {
-    const result = await BarcodeScanner.startScan();
+    try {
+      const result = await BarcodeScanner.startScan();
+      if (result.hasContent) {
+        this.qrData = result.content;
+        console.log('Contenido escaneado:', result.content);
 
-    if (result.hasContent) {
-      this.qrData = result.content;
-      console.log('Contenido escaneado:', result.content);
-
-      // Registra la asistencia
-      this.registerAttendance(result.content);
-    } else {
-      console.error('No se detectó contenido en el escaneo');
+        // Registra la asistencia
+        this.registerAttendance(result.content);
+      } else {
+        console.error('No se detectó contenido en el escaneo');
+      }
+    } catch (error) {
+      console.error('Error al escanear el código QR:', error);
     }
   }
 
