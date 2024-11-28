@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-title>Iniciar Sesión</ion-title>
+    <ion-title class="ion-text-center">Iniciar Sesión</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -36,9 +36,8 @@
     >
       Iniciar Sesión
     </ion-button>
-
-    <ion-note *ngIf="loginError" color="danger">
-      Error de inicio de sesión. Verifique sus credenciales.
-    </ion-note>
   </form>
+  <ion-note *ngIf="loginError" color="danger">
+    Error de inicio de sesión. Verifique sus credenciales.
+  </ion-note>
 </ion-content>

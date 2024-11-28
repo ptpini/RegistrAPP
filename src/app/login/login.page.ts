@@ -27,7 +27,7 @@ export class LoginPage {
     if (this.loginForm.valid) {
       const { email, password } = this.loginForm.value;
       this.authService.login(email, password).subscribe({
-        next: async (success) => {
+        next: (success) => {
           if (success) {
             this.router.navigate(['/home']);
           } else {

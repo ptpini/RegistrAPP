@@ -27,7 +27,7 @@ export class SignupPage {
     if (this.signupForm.valid) {
       const { email, password } = this.signupForm.value;
       this.authService.register(email, password).subscribe({
-        next: async (success) => {
+        next: (success) => {
           if (success) {
             this.router.navigate(['/login']);
           } else {
