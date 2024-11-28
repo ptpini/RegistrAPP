@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
@@ -8,9 +8,9 @@ import { AuthService } from '../services/auth.service';
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
 })
-export class LoginPage implements OnInit {
+export class LoginPage {
   loginForm: FormGroup;
-  loginError: boolean = false;
+  loginError = false;
 
   constructor(
     private fb: FormBuilder,
@@ -18,29 +18,26 @@ export class LoginPage implements OnInit {
     private router: Router
   ) {
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
+      username: ['', Validators.required],
       password: ['', Validators.required],
     });
   }
 
-  ngOnInit() {}
-
-  onLogin() {
+  async onLogin() {
     if (this.loginForm.valid) {
-      const { email, password } = this.loginForm.value;
-      this.authService.login(email, password).subscribe(
-        (success) => {
+      const { username, password } = this.loginForm.value;
+      this.authService.login(username, password).subscribe({
+        next: async (success) => {
           if (success) {
             this.router.navigate(['/home']);
           } else {
             this.loginError = true;
           }
         },
-        (error) => {
-          console.error('Error de inicio de sesión', error);
+        error: () => {
           this.loginError = true;
-        }
-      );
+        },
+      });
     }
   }
 }

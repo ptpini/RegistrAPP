@@ -1,47 +1,60 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './services/auth.guard'; // Importar el AuthGuard
 
 const routes: Routes = [
   {
     path: '',
     redirectTo: 'welcome', // Página inicial predeterminada
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
   {
     path: 'welcome',
-    loadChildren: () => import('./welcome/welcome.module').then(m => m.WelcomePageModule)
+    loadChildren: () =>
+      import('./welcome/welcome.module').then((m) => m.WelcomePageModule),
   },
   {
     path: 'home',
-    loadChildren: () => import('./home/home.module').then(m => m.HomePageModule)
+    loadChildren: () =>
+      import('./home/home.module').then((m) => m.HomePageModule),
+    canActivate: [AuthGuard], // Protegido con AuthGuard
   },
   {
     path: 'attendance-history',
-    loadChildren: () => import('./attendance-history/attendance-history.module').then(m => m.AttendanceHistoryPageModule)
+    loadChildren: () =>
+      import('./attendance-history/attendance-history.module').then(
+        (m) => m.AttendanceHistoryPageModule
+      ),
+    canActivate: [AuthGuard], // Protegido con AuthGuard
   },
   {
     path: 'login',
-    loadChildren: () => import('./login/login.module').then(m => m.LoginPageModule)
+    loadChildren: () =>
+      import('./login/login.module').then((m) => m.LoginPageModule),
   },
   {
     path: 'reset-password',
-    loadChildren: () => import('./reset-password/reset-password.module').then(m => m.ResetPasswordPageModule)
+    loadChildren: () =>
+      import('./reset-password/reset-password.module').then(
+        (m) => m.ResetPasswordPageModule
+      ),
   },
   {
     path: 'signup',
-    loadChildren: () => import('./signup/signup.module').then(m => m.SignupPageModule)
+    loadChildren: () =>
+      import('./signup/signup.module').then((m) => m.SignupPageModule),
   },
   {
     path: '**', // Ruta comodín para manejar errores 404
     redirectTo: 'welcome', // Redirige a una página válida
-    pathMatch: 'full'
-  }
+    pathMatch: 'full',
+  },
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
+    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
   ],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class AppRoutingModule {}

@@ -1,47 +1,59 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { tap, map } from 'rxjs/operators';
-import { Storage } from '@ionic/storage-angular';
 import { ApiService } from './api.service';
+import { Observable } from 'rxjs';
+import { map, catchError, tap } from 'rxjs/operators';
+import { Storage } from '@ionic/storage-angular';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
   private _storage: Storage | null = null;
 
-  constructor(private storage: Storage, private apiService: ApiService) {
+  constructor(private apiService: ApiService, private storage: Storage) {
     this.init();
   }
 
-  async init() {
+  async init(): Promise<void> {
     this._storage = await this.storage.create();
   }
 
-  // Método para enviar el correo de restablecimiento de contraseña
-  resetPassword(email: string): Observable<any> {
-    return this.apiService.sendPasswordResetEmail(email);
+  async isLoggedIn(): Promise<boolean> {
+    return (await this._storage?.get('isLoggedIn')) || false;
   }
 
-  // Autenticación con la API
-  login(email: string, password: string): Observable<boolean> {
-    return this.apiService.authenticateUser({ email, password }).pipe(
-      tap(async (response) => {
-        if (response.success) {
-          await this.storage.set('isLoggedIn', true);
-          await this.storage.set('auth_token', response.token); // Guarda el token
+  login(username: string, password: string): Observable<boolean> {
+    return this.apiService.authenticateUser({ username, password }).pipe(
+      tap(async (response: any) => {
+        if (response.access) {
+          await this._storage?.set('isLoggedIn', true);
+          await this._storage?.set('auth_token', response.access);
         }
       }),
-      map(response => response.success) // Transforma el observable para devolver solo un booleano
+      map((response: any) => !!response.access),
+      catchError((error) => {
+        console.error('Error en el login:', error);
+        throw new Error('Error en el inicio de sesión');
+      })
     );
   }
 
-  async isLoggedIn(): Promise<boolean> {
-    return await this.storage.get('isLoggedIn') || false;
+  register(username: string, password: string): Observable<boolean> {
+    return this.apiService.registerUser({ username, password }).pipe(
+      map((response: any) => response.success),
+      catchError((error) => {
+        console.error('Error en el registro:', error);
+        throw new Error('Error al registrar usuario');
+      })
+    );
   }
 
-  async logout() {
-    await this.storage.remove('isLoggedIn');
-    await this.storage.remove('auth_token'); // Elimina el token al cerrar sesión
+  resetPassword(email: string): Observable<any> {
+    return this.apiService.resetPassword(email).pipe(
+      catchError((error) => {
+        console.error('Error al enviar el correo de recuperación:', error);
+        throw new Error('Error al enviar correo de recuperación');
+      })
+    );
   }
 }

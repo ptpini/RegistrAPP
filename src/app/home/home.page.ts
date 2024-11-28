@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
 import { ApiService } from '../services/api.service';
 import { StorageService } from '../services/storage.service';
 import { NetworkService } from '../services/network.service';
+import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
 
 @Component({
   selector: 'app-home',
@@ -20,7 +20,6 @@ export class HomePage {
 
   async startScanner() {
     const result = await BarcodeScanner.startScan();
-
     if (result.hasContent) {
       this.qrData = result.content;
       console.log('Contenido escaneado:', result.content);
@@ -34,13 +33,13 @@ export class HomePage {
 
   private async registerAttendance(content: string) {
     try {
-      if (this.networkService.isConnected()) {
+      if (await this.networkService.isConnected()) {
         this.apiService.sendAttendance(content).subscribe({
           next: (response) => {
-            console.log('Asistencia registrada con éxito', response);
+            console.log('Asistencia registrada con éxito:', response);
           },
           error: async (error) => {
-            console.error('Error al registrar asistencia', error);
+            console.error('Error al registrar asistencia:', error);
             await this.storageService.saveAttendance(content);
           },
         });

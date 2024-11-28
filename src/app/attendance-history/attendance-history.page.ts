@@ -11,7 +11,7 @@ import { AlertController } from '@ionic/angular';
 export class AttendanceHistoryPage implements OnInit {
   attendanceRecords: any[] = [];
   filteredRecords: any[] = [];
-  filter: 'all' | 'synced' | 'pending' = 'all';
+  filter: 'all' | 'pending' = 'all';
 
   constructor(
     private storageService: StorageService,
@@ -29,17 +29,15 @@ export class AttendanceHistoryPage implements OnInit {
   }
 
   applyFilter() {
-    if (this.filter === 'synced') {
-      this.filteredRecords = this.attendanceRecords.filter(record => record.isSynced);
-    } else if (this.filter === 'pending') {
-      this.filteredRecords = this.attendanceRecords.filter(record => !record.isSynced);
+    if (this.filter === 'pending') {
+      this.filteredRecords = this.attendanceRecords.filter((record) => !record.isSynced);
     } else {
       this.filteredRecords = [...this.attendanceRecords];
     }
   }
 
   async syncPendingRecords() {
-    const pendingRecords = this.attendanceRecords.filter(record => !record.isSynced);
+    const pendingRecords = this.attendanceRecords.filter((record) => !record.isSynced);
     for (let record of pendingRecords) {
       try {
         await this.apiService.sendAttendance(record.content).toPromise();

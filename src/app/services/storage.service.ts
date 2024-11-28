@@ -2,35 +2,35 @@ import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage-angular';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class StorageService {
-  constructor(private storage: Storage) {
+  private storage: Storage | null = null;
+
+  constructor(private storageInstance: Storage) {
     this.init();
   }
 
   async init() {
-    await this.storage.create();
+    this.storage = await this.storageInstance.create();
+  }
+
+  async saveAttendance(content: string): Promise<void> {
+    const attendances = (await this.storage?.get('attendances')) || [];
+    attendances.push({ content, isSynced: false });
+    await this.storage?.set('attendances', attendances);
   }
 
   async getAllAttendances(): Promise<any[]> {
-    const attendances = await this.storage.get('attendances') || [];
-    return attendances;
+    return (await this.storage?.get('attendances')) || [];
   }
 
-  async saveAttendance(content: string, isSynced = false) {
-    const currentAttendance = { content, date: new Date(), isSynced };
-    const attendances = await this.getAllAttendances();
-    attendances.push(currentAttendance);
-    await this.storage.set('attendances', attendances);
-  }
-
-  async updateAttendanceStatus(content: string) {
-    const attendances = await this.getAllAttendances();
-    const index = attendances.findIndex(att => att.content === content);
-    if (index > -1) {
+  async updateAttendanceStatus(content: string): Promise<void> {
+    const attendances = (await this.storage?.get('attendances')) || [];
+    const index = attendances.findIndex((record: any) => record.content === content);
+    if (index !== -1) {
       attendances[index].isSynced = true;
-      await this.storage.set('attendances', attendances);
+      await this.storage?.set('attendances', attendances);
     }
   }
 }
