@@ -1,12 +1,12 @@
 from django.contrib import admin
 from django.urls import path, include
-from django.http import HttpResponse  # Agrega esta línea para importar HttpResponse
+from django.http import HttpResponse
 
 def home(request):
-    return HttpResponse("Bienvenido a RegistrAPP API")  # Vista raíz para la página principal
+    return HttpResponse("Bienvenido a RegistrAPP API")
 
 urlpatterns = [
-    path('admin/', admin.site.urls),  # Rutas del panel de administración
-    path('api/', include('api.urls')),  # Incluye las rutas de la aplicación API
+    path('admin/', admin.site.urls),
+    path('api/', include('api.urls')),
     path('', home),  # Vista raíz
 ]

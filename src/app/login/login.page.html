@@ -10,21 +10,35 @@
       <ion-label position="floating">Correo Electrónico</ion-label>
       <ion-input formControlName="email" type="email"></ion-input>
     </ion-item>
-    <ion-item *ngIf="loginForm?.get('email')?.invalid && loginForm?.get('email')?.touched">
-      <ion-note color="danger">Ingrese un correo válido</ion-note>
-    </ion-item>
+    <ion-note
+      *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched"
+      color="danger"
+    >
+      Ingrese un correo válido
+    </ion-note>
 
     <ion-item>
       <ion-label position="floating">Contraseña</ion-label>
       <ion-input formControlName="password" type="password"></ion-input>
     </ion-item>
-    <ion-item *ngIf="loginForm?.get('password')?.invalid && loginForm?.get('password')?.touched">
-      <ion-note color="danger">Ingrese una contraseña</ion-note>
-    </ion-item>
+    <ion-note
+      *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
+      color="danger"
+    >
+      Ingrese una contraseña válida
+    </ion-note>
 
-    <ion-button expand="block" type="submit" color="primary" [disabled]="!loginForm.valid">Iniciar Sesión</ion-button>
-    <ion-item *ngIf="loginError">
-      <ion-note color="danger">Error de inicio de sesión. Verifique sus credenciales.</ion-note>
-    </ion-item>
+    <ion-button
+      expand="block"
+      type="submit"
+      color="primary"
+      [disabled]="!loginForm.valid"
+    >
+      Iniciar Sesión
+    </ion-button>
+
+    <ion-note *ngIf="loginError" color="danger">
+      Error de inicio de sesión. Verifique sus credenciales.
+    </ion-note>
   </form>
 </ion-content>

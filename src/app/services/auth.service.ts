@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
-import { Observable } from 'rxjs';
-import { map, catchError, tap } from 'rxjs/operators';
 import { Storage } from '@ionic/storage-angular';
+import { Observable } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -31,8 +32,8 @@ export class AuthService {
         }
       }),
       map((response: any) => !!response.access),
-      catchError((error) => {
-        console.error('Error en el login:', error);
+      catchError((error: unknown) => {
+        console.error('Error en el inicio de sesión:', error);
         throw new Error('Error en el inicio de sesión');
       })
     );
@@ -41,7 +42,7 @@ export class AuthService {
   register(username: string, password: string): Observable<boolean> {
     return this.apiService.registerUser({ username, password }).pipe(
       map((response: any) => response.success),
-      catchError((error) => {
+      catchError((error: unknown) => {
         console.error('Error en el registro:', error);
         throw new Error('Error al registrar usuario');
       })
@@ -50,8 +51,8 @@ export class AuthService {
 
   resetPassword(email: string): Observable<any> {
     return this.apiService.resetPassword(email).pipe(
-      catchError((error) => {
-        console.error('Error al enviar el correo de recuperación:', error);
+      catchError((error: unknown) => {
+        console.error('Error al enviar correo de recuperación:', error);
         throw new Error('Error al enviar correo de recuperación');
       })
     );

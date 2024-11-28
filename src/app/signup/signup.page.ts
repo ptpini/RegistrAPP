@@ -1,14 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.page.html',
   styleUrls: ['./signup.page.scss'],
 })
-export class SignupPage implements OnInit {
+export class SignupPage {
   signupForm: FormGroup;
   signupError = false;
 
@@ -18,32 +18,26 @@ export class SignupPage implements OnInit {
     private router: Router
   ) {
     this.signupForm = this.fb.group({
-      username: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
     });
   }
 
-  ngOnInit() {}
-
   async onSignup() {
     if (this.signupForm.valid) {
-      const { username, password } = this.signupForm.value;
-
-      this.authService.register(username, password).subscribe({
-        next: (success: boolean) => {
+      const { email, password } = this.signupForm.value;
+      this.authService.register(email, password).subscribe({
+        next: async (success) => {
           if (success) {
-            this.router.navigate(['/login']); // Redirige al login en caso de éxito
+            this.router.navigate(['/login']);
           } else {
-            this.signupError = true; // Manejo de error
+            this.signupError = true;
           }
         },
-        error: (error: any) => {
+        error: () => {
           this.signupError = true;
-          console.error('Error en el registro:', error);
         },
       });
-    } else {
-      console.error('Formulario no válido');
     }
   }
 }

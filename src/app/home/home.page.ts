@@ -20,11 +20,10 @@ export class HomePage {
 
   async startScanner() {
     const result = await BarcodeScanner.startScan();
+
     if (result.hasContent) {
       this.qrData = result.content;
       console.log('Contenido escaneado:', result.content);
-
-      // Verificar y enviar asistencia a la API
       this.registerAttendance(result.content);
     } else {
       console.error('No se detectó contenido en el escaneo');
